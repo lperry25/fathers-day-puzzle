@@ -118,23 +118,23 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
       }
     });
     
-    // Fill in the revealed letters based on correct answers
+        // Fill in the revealed letters based on correct answers
     puzzleData.forEach((puzzle, index) => {
       const userAnswer = userAnswers[index]?.toUpperCase() || '';
       
       // Check if the answer is correct
       if (userAnswer && userAnswer === puzzle.answer.toUpperCase()) {
         // Find where this letter belongs in the secret message
-        for (const [msgIndex, mapping] of letterToPuzzleMap.entries()) {
-          if (mapping.puzzleId === puzzle.id) {
+        Array.from(letterToPuzzleMap.keys()).forEach(msgIndex => {
+          const mapping = letterToPuzzleMap.get(msgIndex);
+          if (mapping && mapping.puzzleId === puzzle.id) {
             // Put the correct letter in the right position
             const letterPos = mapping.letterIndex;
             if (letterPos < userAnswer.length) {
               newRevealedMessage[msgIndex] = userAnswer[letterPos];
             }
-            break;
           }
-        }
+        });
       }
     });
     
