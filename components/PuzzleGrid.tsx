@@ -171,7 +171,7 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
             {puzzleData.map((puzzle, index) => (
               <div 
                 key={puzzle.id}
-                className={`puzzle-clue p-2 cursor-pointer rounded ${activeClue === index ? 'bg-blue-100 puzzle-clue-active' : ''}`}
+                className={`puzzle-clue p-2 cursor-pointer h-[42px] rounded ${activeClue === index ? 'bg-blue-100 puzzle-clue-active' : ''}`}
                 onClick={() => setActiveClue(index)}
               >
                 <span className="font-bold mr-2">{puzzle.id}.</span>
