@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 243, 244, 246;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .puzzle-cell {
+    @apply w-10 h-10 border border-gray-300 flex items-center justify-center text-lg font-medium uppercase transition-colors;
+  }
+  
+  .puzzle-cell-filled {
+    @apply bg-primary text-white;
+  }
+  
+  .puzzle-cell-empty {
+    @apply bg-white hover:bg-gray-100;
+  }
+  
+  .puzzle-cell-number {
+    @apply absolute top-0 left-0 text-xs text-gray-500 p-0.5;
+  }
+  
+  .puzzle-clue {
+    @apply text-left p-2 border-b border-gray-200 hover:bg-gray-50 cursor-pointer;
+  }
+  
+  .puzzle-clue-active {
+    @apply bg-blue-50 font-medium;
+  }
+}
