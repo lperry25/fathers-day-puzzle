@@ -2,62 +2,62 @@ import { useState, useEffect } from 'react';
 
 // Define the puzzle clues and answers
 const puzzleData = [
-  { id: 1, clue: "Affection or deep attachment (4)", answer: "LOVE", messageLetters: [0] }, // L
-  { id: 2, clue: "Circular shape or ring (4)", answer: "LOOP", messageLetters: [1] }, // O
-  { id: 3, clue: "Captivated and unable to turn away (7)", answer: "RIVETED", messageLetters: [2] }, // V
-  { id: 4, clue: "Symbol denoting conceptual possibilities (8)", answer: "PARADIGM", messageLetters: [5] }, // E
-  { id: 5, clue: "Shout of excitement (5)", answer: "YODEL", messageLetters: [0] }, // Y
-  { id: 6, clue: "Spherical celestial object (5)", answer: "ORION", messageLetters: [0] }, // O
-  { id: 7, clue: "Anatomical passage for respiration (7)", answer: "TUBULAR", messageLetters: [0] }, // U
-  { id: 8, clue: "Paternal guardian (5)", answer: "DADDY", messageLetters: [0] }, // D
-  { id: 9, clue: "First letter in Greek alphabet (5)", answer: "ALPHA", messageLetters: [0] }, // A
-  { id: 10, clue: "Essential feature of exclamation (8)", answer: "DRAMATIC", messageLetters: [0] }, // D
-  { id: 11, clue: "Unrequested electronic correspondence (9)", answer: "JUNK-MAIL!", messageLetters: [8] }, // !
-  { id: 12, clue: "Dwelling for nocturnal winged mammals (6)", answer: "CAVERN", messageLetters: [2] }, // H
-  { id: 13, clue: "Certainty beyond reasonable doubt (7)", answer: "ASSURED", messageLetters: [0] }, // A
-  { id: 14, clue: "Horizontal navigation instrument (7)", answer: "SEXTANT", messageLetters: [3] }, // V
-  { id: 15, clue: "Ethereal apparitions in haunted locations (8)", answer: "SPECTERS", messageLetters: [4] }, // E
-  { id: 16, clue: "Substantial in magnitude (8)", answer: "GIGANTIC", messageLetters: [3] }, // A
-  { id: 17, clue: "Initial creative breakthrough (7)", answer: "GENESIS", messageLetters: [0] }, // G
-  { id: 18, clue: "Cardinal direction of sunrise (7)", answer: "EASTERN", messageLetters: [2] }, // R
-  { id: 19, clue: "Terminal destination (8)", answer: "ENDPOINT", messageLetters: [2] }, // E
-  { id: 20, clue: "Precipitation in frigid conditions (5)", answer: "SLEET", messageLetters: [0] }, // A
-  { id: 21, clue: "Systematic organization of info (8)", answer: "TAXONOMY", messageLetters: [1] }, // T
+  { id: 1, clue: "Affection or deep attachment", answer: "LOVE", messageLetters: [0] }, // L
+  { id: 2, clue: "Circular shape or ring", answer: "LOOP", messageLetters: [1] }, // O
+  { id: 3, clue: "Captivated and unable to turn away", answer: "RIVETED", messageLetters: [2] }, // V
+  { id: 4, clue: "Symbol denoting conceptual possibilities", answer: "PARADIGM", messageLetters: [5] }, // E
+  { id: 5, clue: "Shout of excitement", answer: "YODEL", messageLetters: [0] }, // Y
+  { id: 6, clue: "Spherical celestial object", answer: "ORION", messageLetters: [0] }, // O
+  { id: 7, clue: "Anatomical passage for respiration", answer: "TUBULAR", messageLetters: [0] }, // U
+  { id: 8, clue: "Paternal guardian", answer: "DADDY", messageLetters: [0] }, // D
+  { id: 9, clue: "First letter in Greek alphabet", answer: "ALPHA", messageLetters: [0] }, // A
+  { id: 10, clue: "Essential feature of exclamation", answer: "DRAMATIC", messageLetters: [0] }, // D
+  { id: 11, clue: "Unrequested electronic correspondence", answer: "JUNK-MAIL!", messageLetters: [8] }, // !
+  { id: 12, clue: "Dwelling for nocturnal winged mammals", answer: "CAVERN", messageLetters: [2] }, // H
+  { id: 13, clue: "Certainty beyond reasonable doubt", answer: "ASSURED", messageLetters: [0] }, // A
+  { id: 14, clue: "Horizontal navigation instrument", answer: "SEXTANT", messageLetters: [3] }, // V
+  { id: 15, clue: "Ethereal apparitions in haunted locations", answer: "SPECTERS", messageLetters: [4] }, // E
+  { id: 16, clue: "Substantial in magnitude", answer: "GIGANTIC", messageLetters: [3] }, // A
+  { id: 17, clue: "Initial creative breakthrough", answer: "GENESIS", messageLetters: [0] }, // G
+  { id: 18, clue: "Cardinal direction of sunrise", answer: "EASTERN", messageLetters: [2] }, // R
+  { id: 19, clue: "Terminal destination", answer: "ENDPOINT", messageLetters: [2] }, // E
+  { id: 20, clue: "Precipitation in frigid conditions", answer: "SLEET", messageLetters: [0] }, // A
+  { id: 21, clue: "Systematic organization of info", answer: "TAXONOMY", messageLetters: [1] }, // T
   
   // Continue with more clues for the full message
-  { id: 22, clue: "Progenitor of family lineage (9)", answer: "PATRIARCH", messageLetters: [3] }, // F
-  { id: 23, clue: "Astronomical explosion visible from Earth (9)", answer: "SUPERNOVA", messageLetters: [4] }, // A
-  { id: 24, clue: "Temporal measurement device (10)", answer: "TIMEPIECE", messageLetters: [0] }, // T
-  { id: 25, clue: "Aromatic foliage from herbaceous plant (6)", answer: "HERBAL", messageLetters: [0] }, // H
-  { id: 26, clue: "Melodic vocal expression (8)", answer: "CHANTING", messageLetters: [4] }, // E
-  { id: 27, clue: "Panoramic vista (7)", answer: "SCENERY", messageLetters: [2] }, // R
-  { id: 28, clue: "Archaic expression for affirmative (9)", answer: "FORSOOTH", messageLetters: [0] }, // '
-  { id: 29, clue: "Cerebral disorder characterizing confusion (8)", answer: "DELIRIUM", messageLetters: [1] }, // S
+  { id: 22, clue: "Progenitor of family lineage", answer: "PATRIARCH", messageLetters: [3] }, // F
+  { id: 23, clue: "Astronomical explosion visible from Earth", answer: "SUPERNOVA", messageLetters: [4] }, // A
+  { id: 24, clue: "Temporal measurement device", answer: "TIMEPIECE", messageLetters: [0] }, // T
+  { id: 25, clue: "Aromatic foliage from herbaceous plant", answer: "HERBAL", messageLetters: [0] }, // H
+  { id: 26, clue: "Melodic vocal expression", answer: "CHANTING", messageLetters: [4] }, // E
+  { id: 27, clue: "Panoramic vista", answer: "SCENERY", messageLetters: [2] }, // R
+  { id: 28, clue: "Archaic expression for affirmative", answer: "FORSOOTH", messageLetters: [0] }, // '
+  { id: 29, clue: "Cerebral disorder characterizing confusion", answer: "DELIRIUM", messageLetters: [1] }, // S
   
   // Continue for DAY!
-  { id: 30, clue: "Creation of visible boundary (13)", answer: "DEMARCATION", messageLetters: [0] }, // D
-  { id: 31, clue: "Initial vocal response to surprise (15)", answer: "ASTONISHMENT", messageLetters: [0] }, // A
-  { id: 32, clue: "Juvenile development stage (5)", answer: "YOUTH", messageLetters: [0] }, // Y
-  { id: 33, clue: "Indication of strong emotion (13)", answer: "EXCLAMATION", messageLetters: [0] }, // !
+  { id: 30, clue: "Creation of visible boundary", answer: "DEMARCATION", messageLetters: [0] }, // D
+  { id: 31, clue: "Initial vocal response to surprise", answer: "ASTONISHMENT", messageLetters: [0] }, // A
+  { id: 32, clue: "Juvenile development stage", answer: "YOUTH", messageLetters: [0] }, // Y
+  { id: 33, clue: "Indication of strong emotion", answer: "EXCLAMATION", messageLetters: [0] }, // !
   
   // LOVE LAURA AND EMILIE
-  { id: 34, clue: "Profound romantic attachment (9)", answer: "ADORATION", messageLetters: [3] }, // L
-  { id: 35, clue: "Vacant space above surface (8)", answer: "OVERHEAD", messageLetters: [0] }, // O
-  { id: 36, clue: "Triumphant gladiatorial gesture (7)", answer: "VICTORY", messageLetters: [0] }, // V
-  { id: 37, clue: "Essential element for respiration (6)", answer: "OXYGEN", messageLetters: [0] }, // E
-  { id: 38, clue: "Directional illuminating device (10)", answer: "FLASHLIGHT", messageLetters: [1] }, // L
-  { id: 39, clue: "Atmosphere surrounding celestial body (4)", answer: "AURA", messageLetters: [0] }, // A
-  { id: 40, clue: "Naval fleet's defensive formation (6)", answer: "ARMADA", messageLetters: [1] }, // U
-  { id: 41, clue: "Circular theatrical platform (6)", answer: "ARENA", messageLetters: [0] }, // R
-  { id: 42, clue: "Alphabetical character after Z (9)", answer: "AMPERSAND", messageLetters: [0] }, // A
-  { id: 43, clue: "Primary means of linguistic communication (8)", answer: "LANGUAGE", messageLetters: [4] }, // A
-  { id: 44, clue: "Negation in formal logic (6)", answer: "DENIAL", messageLetters: [2] }, // N
-  { id: 45, clue: "Geometric shape with equal sides (7)", answer: "DIAMOND", messageLetters: [0] }, // D
-  { id: 46, clue: "Ethereal being of spiritual nature (6)", answer: "ENTITY", messageLetters: [0] }, // E
-  { id: 47, clue: "Skilled mountaineer's challenge (6)", answer: "SUMMIT", messageLetters: [2] }, // M
-  { id: 48, clue: "Horizontal structural component (6)", answer: "LINTEL", messageLetters: [0] }, // I
-  { id: 49, clue: "Persistence despite adversity (8)", answer: "TENACITY", messageLetters: [3] }, // L
-  { id: 50, clue: "Greek letter corresponding to E (7)", answer: "EPSILON", messageLetters: [0] }, // E
+  { id: 34, clue: "Profound romantic attachment", answer: "ADORATION", messageLetters: [3] }, // L
+  { id: 35, clue: "Vacant space above surface", answer: "OVERHEAD", messageLetters: [0] }, // O
+  { id: 36, clue: "Triumphant gladiatorial gesture", answer: "VICTORY", messageLetters: [0] }, // E
+  { id: 37, clue: "Essential element for respiration", answer: "OXYGEN", messageLetters: [0] }, // E
+  { id: 38, clue: "Directional illuminating device", answer: "FLASHLIGHT", messageLetters: [1] }, // L
+  { id: 39, clue: "Atmosphere surrounding celestial body", answer: "AURA", messageLetters: [0] }, // A
+  { id: 40, clue: "Naval fleet's defensive formation", answer: "ARMADA", messageLetters: [1] }, // U
+  { id: 41, clue: "Circular theatrical platform", answer: "ARENA", messageLetters: [0] }, // R
+  { id: 42, clue: "Alphabetical character after Z", answer: "AMPERSAND", messageLetters: [0] }, // A
+  { id: 43, clue: "Primary means of linguistic communication", answer: "LANGUAGE", messageLetters: [4] }, // A
+  { id: 44, clue: "Negation in formal logic", answer: "DENIAL", messageLetters: [2] }, // N
+  { id: 45, clue: "Geometric shape with equal sides", answer: "DIAMOND", messageLetters: [0] }, // D
+  { id: 46, clue: "Ethereal being of spiritual nature", answer: "ENTITY", messageLetters: [0] }, // E
+  { id: 47, clue: "Skilled mountaineer's challenge", answer: "SUMMIT", messageLetters: [2] }, // M
+  { id: 48, clue: "Horizontal structural component", answer: "LINTEL", messageLetters: [0] }, // I
+  { id: 49, clue: "Persistence despite adversity", answer: "TENACITY", messageLetters: [3] }, // L
+  { id: 50, clue: "Greek letter corresponding to E", answer: "EPSILON", messageLetters: [0] }, // E
 ];
 
 // The secret message that will be revealed
@@ -121,7 +121,7 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
                 onClick={() => setActiveClue(index)}
               >
                 <span className="font-bold mr-2">{puzzle.id}.</span>
-                {puzzle.clue} ({puzzle.answer.length})
+                {puzzle.clue}
               </div>
             ))}
           </div>
