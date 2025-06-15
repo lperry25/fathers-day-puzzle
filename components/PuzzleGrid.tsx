@@ -2,26 +2,26 @@ import { useState, useEffect } from 'react';
 
 // Define the puzzle clues and answers
 const puzzleData = [
-  { id: 1, clue: "Dad's favorite hobby", answer: "FISHING", firstLetterIndex: 0 },
-  { id: 2, clue: "What Dad always says when he's proud", answer: "AWESOME", firstLetterIndex: 1 },
-  { id: 3, clue: "Dad's go-to breakfast food", answer: "TOAST", firstLetterIndex: 2 },
-  { id: 4, clue: "Dad's favorite sport to watch", answer: "HOCKEY", firstLetterIndex: 3 },
-  { id: 5, clue: "Dad's favorite season", answer: "SUMMER", firstLetterIndex: 4 },
-  { id: 6, clue: "Dad's favorite movie genre", answer: "ACTION", firstLetterIndex: 5 },
-  { id: 7, clue: "Dad's favorite dessert", answer: "ICECREAM", firstLetterIndex: 6 },
-  { id: 8, clue: "Dad's favorite place to relax", answer: "DECK", firstLetterIndex: 7 },
-  { id: 9, clue: "Dad's favorite type of music", answer: "ROCK", firstLetterIndex: 8 },
-  { id: 10, clue: "Dad's favorite holiday", answer: "CHRISTMAS", firstLetterIndex: 9 },
-  { id: 11, clue: "Dad's favorite drink", answer: "COFFEE", firstLetterIndex: 10 },
-  { id: 12, clue: "Dad's favorite tool", answer: "HAMMER", firstLetterIndex: 11 },
-  { id: 13, clue: "Dad's favorite color", answer: "BLUE", firstLetterIndex: 12 },
-  { id: 14, clue: "Dad's favorite animal", answer: "DOG", firstLetterIndex: 13 },
-  { id: 15, clue: "Dad's favorite snack", answer: "CHIPS", firstLetterIndex: 14 },
-  { id: 16, clue: "Dad's favorite TV show", answer: "SURVIVOR", firstLetterIndex: 15 },
-  { id: 17, clue: "Dad's favorite car", answer: "JEEP", firstLetterIndex: 16 },
-  { id: 18, clue: "Dad's favorite outdoor activity", answer: "HIKING", firstLetterIndex: 17 },
-  { id: 19, clue: "Dad's favorite time of day", answer: "EVENING", firstLetterIndex: 18 },
-  { id: 20, clue: "Dad's favorite thing about family", answer: "LAUGHTER", firstLetterIndex: 19 },
+  { id: 1, clue: "Angling activity with rod and reel", answer: "FISHING", firstLetterIndex: 0 },
+  { id: 2, clue: "Extremely impressive or excellent", answer: "AWESOME", firstLetterIndex: 1 },
+  { id: 3, clue: "Sliced bread browned by heat", answer: "TOAST", firstLetterIndex: 2 },
+  { id: 4, clue: "Ice sport played with sticks and a puck", answer: "HOCKEY", firstLetterIndex: 3 },
+  { id: 5, clue: "Warmest season of the year", answer: "SUMMER", firstLetterIndex: 4 },
+  { id: 6, clue: "Film genre with thrilling sequences and stunts", answer: "ACTION", firstLetterIndex: 5 },
+  { id: 7, clue: "Frozen dairy dessert, often in a cone", answer: "ICECREAM", firstLetterIndex: 6 },
+  { id: 8, clue: "Outdoor platform attached to a house", answer: "DECK", firstLetterIndex: 7 },
+  { id: 9, clue: "Genre of music characterized by electric guitars and drums", answer: "ROCK", firstLetterIndex: 8 },
+  { id: 10, clue: "December 25th celebration", answer: "CHRISTMAS", firstLetterIndex: 9 },
+  { id: 11, clue: "Caffeinated morning beverage", answer: "COFFEE", firstLetterIndex: 10 },
+  { id: 12, clue: "Tool for driving nails", answer: "HAMMER", firstLetterIndex: 11 },
+  { id: 13, clue: "Color of the sky on a clear day", answer: "BLUE", firstLetterIndex: 12 },
+  { id: 14, clue: "Man's best friend", answer: "DOG", firstLetterIndex: 13 },
+  { id: 15, clue: "Thin, crispy potato snack", answer: "CHIPS", firstLetterIndex: 14 },
+  { id: 16, clue: "Reality show where contestants are voted off an island", answer: "SURVIVOR", firstLetterIndex: 15 },
+  { id: 17, clue: "Rugged 4x4 vehicle brand", answer: "JEEP", firstLetterIndex: 16 },
+  { id: 18, clue: "Walking activity on trails or mountains", answer: "HIKING", firstLetterIndex: 17 },
+  { id: 19, clue: "Time between afternoon and night", answer: "EVENING", firstLetterIndex: 18 },
+  { id: 20, clue: "Audible expression of amusement", answer: "LAUGHTER", firstLetterIndex: 19 },
 ];
 
 // The secret message that will be revealed
@@ -45,7 +45,7 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
       }
       return '';
     }).join('');
-    
+
     setRevealedMessage(message);
     onMessageUpdate(message);
   }, [userAnswers, onMessageUpdate]);

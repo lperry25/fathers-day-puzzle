@@ -4,7 +4,7 @@ A special Father's Day crossword/acrostic puzzle that reveals a secret message w
 
 ## Features
 
-- Interactive crossword puzzle with clues about Dad
+- Interactive crossword puzzle with challenging clues
 - Real-time feedback on correct/incorrect answers
 - Progress tracking for the secret message
 - Celebration animation when the message is revealed
@@ -25,7 +25,7 @@ The puzzle reveals the message: "Love you Dad! Have a great father's day! Love L
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/YOUR-USERNAME/fathers-day-puzzle.git
 cd fathers-day-puzzle
 ```
 
