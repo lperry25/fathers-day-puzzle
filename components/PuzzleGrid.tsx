@@ -3,62 +3,79 @@ import { useRouter } from 'next/router';
 
 // Define the puzzle clues and answers - removing punctuation from answers
 const puzzleData = [
+  // LOVE
   { id: 1, clue: "Affection or deep attachment", answer: "LOVE", messageLetters: [0] }, // L
-  { id: 2, clue: "Circular shape or ring", answer: "LOOP", messageLetters: [1] }, // O
+  { id: 2, clue: "Circular shape or ring", answer: "LOOP", messageLetters: [1] }, // O 
   { id: 3, clue: "Captivated and unable to turn away", answer: "RIVETED", messageLetters: [2] }, // V
   { id: 4, clue: "Symbol denoting conceptual possibilities", answer: "EMBLEM", messageLetters: [0] }, // E
+  
+  // YOU
   { id: 5, clue: "Shout of excitement", answer: "YODEL", messageLetters: [0] }, // Y
-  { id: 6, clue: "Spherical celestial object", answer: "ORION", messageLetters: [0] }, // O
+  { id: 6, clue: "Spherical celestial object", answer: "ORB", messageLetters: [0] }, // O - fixed from ORION
   { id: 7, clue: "Anatomical passage for respiration", answer: "TUBULAR", messageLetters: [1] }, // U
+  
+  // DAD
   { id: 8, clue: "Paternal guardian", answer: "DADDY", messageLetters: [0] }, // D
   { id: 9, clue: "First letter in Greek alphabet", answer: "ALPHA", messageLetters: [0] }, // A
   { id: 10, clue: "Essential feature of exclamation", answer: "DRAMATIC", messageLetters: [0] }, // D
-  { id: 11, clue: "Unrequested electronic correspondence", answer: "JUNKEMAIL", messageLetters: [8] }, // L (removed "JUNK-MAIL!")
-  { id: 12, clue: "Dwelling for nocturnal winged mammals", answer: "CAVERN", messageLetters: [2] }, // H
-  { id: 13, clue: "Certainty beyond reasonable doubt", answer: "ASSURED", messageLetters: [0] }, // A
-  { id: 14, clue: "Horizontal navigation instrument", answer: "SEXTANT", messageLetters: [3] }, // V
-  { id: 15, clue: "Ethereal apparitions in haunted locations", answer: "SPECTERS", messageLetters: [4] }, // E
-  { id: 16, clue: "Substantial in magnitude", answer: "GIGANTIC", messageLetters: [3] }, // A
-  { id: 17, clue: "Initial creative breakthrough", answer: "GENESIS", messageLetters: [0] }, // G
-  { id: 18, clue: "Cardinal direction of sunrise", answer: "EASTERN", messageLetters: [2] }, // R
-  { id: 19, clue: "Terminal destination", answer: "ENDPOINT", messageLetters: [2] }, // E
-  { id: 20, clue: "Precipitation in frigid conditions", answer: "SLEET", messageLetters: [0] }, // A
-  { id: 21, clue: "Systematic organization of info", answer: "TAXONOMY", messageLetters: [1] }, // T
+
+  // HAVE
+  { id: 11, clue: "Dwelling for nocturnal winged mammals", answer: "HABITAT", messageLetters: [0] }, // H 
+  { id: 12, clue: "Certainty beyond reasonable doubt", answer: "ASSURED", messageLetters: [0] }, // A
+  { id: 13, clue: "Horizontal navigation instrument", answer: "SEXTANT", messageLetters: [2] }, // V
+  { id: 14, clue: "Ethereal apparitions in haunted locations", answer: "SPECTERS", messageLetters: [2] }, // E
+
+  // A
+  { id: 15, clue: "Substantial in magnitude", answer: "GIGANTIC", messageLetters: [3] }, // A
+
+  // GREAT
+  { id: 16, clue: "Initial creative breakthrough", answer: "GENESIS", messageLetters: [0] }, // G
+  { id: 17, clue: "Cardinal direction of sunrise", answer: "EASTERN", messageLetters: [5] }, // R 
+  { id: 18, clue: "Terminal destination", answer: "ENDPOINT", messageLetters: [0] }, // E
+  { id: 19, clue: "Precipitation in frigid conditions", answer: "SLEET", messageLetters: [0] }, // A - wrong
+  { id: 20, clue: "Systematic organization of info", answer: "TAXONOMY", messageLetters: [1] }, // T 
   
-  // Continue with more clues for the full message
-  { id: 22, clue: "Progenitor of family lineage", answer: "PATRIARCH", messageLetters: [3] }, // F
-  { id: 23, clue: "Astronomical explosion visible from Earth", answer: "SUPERNOVA", messageLetters: [4] }, // A
-  { id: 24, clue: "Temporal measurement device", answer: "TIMEPIECE", messageLetters: [0] }, // T
-  { id: 25, clue: "Aromatic foliage from herbaceous plant", answer: "HERBAL", messageLetters: [0] }, // H
-  { id: 26, clue: "Melodic vocal expression", answer: "CHANTING", messageLetters: [4] }, // E
-  { id: 27, clue: "Panoramic vista", answer: "SCENERY", messageLetters: [2] }, // R
-  { id: 28, clue: "Archaic expression for affirmative", answer: "FORSOOTH", messageLetters: [0] }, // '
-  { id: 29, clue: "Cerebral disorder characterizing confusion", answer: "DELIRIUM", messageLetters: [1] }, // S
+  // FATHER
+  { id: 21, clue: "Progenitor of family lineage", answer: "PATRIARCH", messageLetters: [3] }, // F - wrong
+  { id: 22, clue: "Astronomical explosion visible from Earth", answer: "SUPERNOVA", messageLetters: [8] }, // A
+  { id: 23, clue: "Temporal measurement device", answer: "TIMEPIECE", messageLetters: [0] }, // T 
+  { id: 24, clue: "Aromatic foliage from herbaceous plant", answer: "HERBAL", messageLetters: [0] }, // H 
+  { id: 25, clue: "Melodic vocal expression", answer: "CHANTING", messageLetters: [4] }, // E - wrong
+  { id: 26, clue: "Panoramic vista", answer: "SCENERY", messageLetters: [5] }, // R
   
-  // Continue for DAY!
-  { id: 30, clue: "Creation of visible boundary", answer: "DEMARCATION", messageLetters: [0] }, // D
-  { id: 31, clue: "Initial vocal response to surprise", answer: "ASTONISHMENT", messageLetters: [0] }, // A
-  { id: 32, clue: "Juvenile development stage", answer: "YOUTH", messageLetters: [0] }, // Y
-  { id: 33, clue: "Indication of strong emotion", answer: "EXCLAMATION", messageLetters: [0] }, // !
+  // 'S
+  { id: 27, clue: "Cerebral disorder characterizing confusion", answer: "STUPOR", messageLetters: [0] }, // S
   
-  // LOVE LAURA AND EMILIE
-  { id: 34, clue: "Profound romantic attachment", answer: "ADORATION", messageLetters: [3] }, // L
-  { id: 35, clue: "Vacant space above surface", answer: "OVERHEAD", messageLetters: [0] }, // O
-  { id: 36, clue: "Triumphant gladiatorial gesture", answer: "VICTORY", messageLetters: [0] }, // E
-  { id: 37, clue: "Essential element for respiration", answer: "OXYGEN", messageLetters: [0] }, // E
-  { id: 38, clue: "Directional illuminating device", answer: "FLASHLIGHT", messageLetters: [1] }, // L
-  { id: 39, clue: "Atmosphere surrounding celestial body", answer: "AURA", messageLetters: [0] }, // A
-  { id: 40, clue: "Naval fleet's defensive formation", answer: "ARMADA", messageLetters: [1] }, // U
-  { id: 41, clue: "Circular theatrical platform", answer: "ARENA", messageLetters: [0] }, // R
-  { id: 42, clue: "Alphabetical character after Z", answer: "AMPERSAND", messageLetters: [0] }, // A
-  { id: 43, clue: "Primary means of linguistic communication", answer: "LANGUAGE", messageLetters: [4] }, // A
-  { id: 44, clue: "Negation in formal logic", answer: "DENIAL", messageLetters: [2] }, // N
-  { id: 45, clue: "Geometric shape with equal sides", answer: "DIAMOND", messageLetters: [0] }, // D
-  { id: 46, clue: "Ethereal being of spiritual nature", answer: "ENTITY", messageLetters: [0] }, // E
-  { id: 47, clue: "Skilled mountaineer's challenge", answer: "SUMMIT", messageLetters: [2] }, // M
-  { id: 48, clue: "Horizontal structural component", answer: "LINTEL", messageLetters: [0] }, // I
-  { id: 49, clue: "Persistence despite adversity", answer: "TENACITY", messageLetters: [3] }, // L
-  { id: 50, clue: "Greek letter corresponding to E", answer: "EPSILON", messageLetters: [0] }, // E
+  // DAY!
+  { id: 28, clue: "Creation of visible boundary", answer: "DEMARCATION", messageLetters: [0] }, // D
+  { id: 29, clue: "Initial vocal response to surprise", answer: "ASTONISHMENT", messageLetters: [0] }, // A 
+  { id: 30, clue: "Juvenile development stage", answer: "YOUTH", messageLetters: [0] }, // Y 
+  
+  // LOVE
+  { id: 31, clue: "Profound romantic attachment", answer: "ADORATION", messageLetters: [3] }, // L - wrong
+  { id: 32, clue: "Vacant space above surface", answer: "OVERHEAD", messageLetters: [0] }, // O 
+  { id: 33, clue: "Triumphant gladiatorial gesture", answer: "VICTORY", messageLetters: [0] }, // V 
+  { id: 34, clue: "Essential element for respiration", answer: "OXYGEN", messageLetters: [4] }, // E 
+  
+  // LAURA
+  { id: 35, clue: "Directional illuminating device", answer: "FLASHLIGHT", messageLetters: [1] }, // L
+  { id: 36, clue: "Atmosphere surrounding celestial body", answer: "AURA", messageLetters: [0] }, // A
+  { id: 37, clue: "Naval fleet's defensive formation", answer: "ARMADA", messageLetters: [1] }, // U - wrong
+  { id: 38, clue: "Circular theatrical platform", answer: "ARENA", messageLetters: [1] }, // R
+  { id: 39, clue: "Primary visual representation", answer: "APPEARANCE", messageLetters: [0] }, // A
+  
+  // AND
+  { id: 40, clue: "Primary means of linguistic communication", answer: "LANGUAGE", messageLetters: [1] }, // A
+  { id: 41, clue: "Negation in formal logic", answer: "DENIAL", messageLetters: [2] }, // N 
+  { id: 42, clue: "Geometric shape with equal sides", answer: "DIAMOND", messageLetters: [0] }, // D 
+  
+  // EMILIE
+  { id: 43, clue: "Ethereal being of spiritual nature", answer: "ENTITY", messageLetters: [0] }, // E
+  { id: 44, clue: "Skilled mountaineer's challenge", answer: "SUMMIT", messageLetters: [2] }, // M
+  { id: 45, clue: "Insignificant amount", answer: "IOTA", messageLetters: [0] }, // I
+  { id: 46, clue: "Formal written communication", answer: "LETTER", messageLetters: [0] }, // L
+  { id: 47, clue: "Perceptive observation", answer: "INSIGHT", messageLetters: [0] }, // I 
+  { id: 48, clue: "Greek letter corresponding to E", answer: "EPSILON", messageLetters: [0] }, // E
 ];
 
 // The secret message including punctuation
