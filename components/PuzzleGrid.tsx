@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-// Define the puzzle clues and answers
+// Define the puzzle clues and answers - removing punctuation from answers
 const puzzleData = [
   { id: 1, clue: "Affection or deep attachment", answer: "LOVE", messageLetters: [0] }, // L
   { id: 2, clue: "Circular shape or ring", answer: "LOOP", messageLetters: [1] }, // O
   { id: 3, clue: "Captivated and unable to turn away", answer: "RIVETED", messageLetters: [2] }, // V
-  { id: 4, clue: "Symbol denoting conceptual possibilities", answer: "PARADIGM", messageLetters: [5] }, // E
+  { id: 4, clue: "Symbol denoting conceptual possibilities", answer: "EMBLEM", messageLetters: [0] }, // E
   { id: 5, clue: "Shout of excitement", answer: "YODEL", messageLetters: [0] }, // Y
   { id: 6, clue: "Spherical celestial object", answer: "ORION", messageLetters: [0] }, // O
-  { id: 7, clue: "Anatomical passage for respiration", answer: "TUBULAR", messageLetters: [0] }, // U
+  { id: 7, clue: "Anatomical passage for respiration", answer: "TUBULAR", messageLetters: [1] }, // U
   { id: 8, clue: "Paternal guardian", answer: "DADDY", messageLetters: [0] }, // D
   { id: 9, clue: "First letter in Greek alphabet", answer: "ALPHA", messageLetters: [0] }, // A
   { id: 10, clue: "Essential feature of exclamation", answer: "DRAMATIC", messageLetters: [0] }, // D
-  { id: 11, clue: "Unrequested electronic correspondence", answer: "JUNK-MAIL!", messageLetters: [8] }, // !
+  { id: 11, clue: "Unrequested electronic correspondence", answer: "JUNKEMAIL", messageLetters: [8] }, // L (removed "JUNK-MAIL!")
   { id: 12, clue: "Dwelling for nocturnal winged mammals", answer: "CAVERN", messageLetters: [2] }, // H
   { id: 13, clue: "Certainty beyond reasonable doubt", answer: "ASSURED", messageLetters: [0] }, // A
   { id: 14, clue: "Horizontal navigation instrument", answer: "SEXTANT", messageLetters: [3] }, // V
@@ -60,8 +61,13 @@ const puzzleData = [
   { id: 50, clue: "Greek letter corresponding to E", answer: "EPSILON", messageLetters: [0] }, // E
 ];
 
-// The secret message that will be revealed
+// The secret message including punctuation
 const secretMessage = "LOVE YOU DAD! HAVE A GREAT FATHER'S DAY! LOVE LAURA AND EMILIE";
+
+// Helper function to determine if a character is punctuation or space
+const isPunctuationOrSpace = (char: string): boolean => {
+  return /[^\w]/.test(char) || char === ' ';
+};
 
 interface PuzzleGridProps {
   onMessageUpdate: (message: string) => void;
@@ -70,30 +76,55 @@ interface PuzzleGridProps {
 const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
   const [userAnswers, setUserAnswers] = useState<string[]>(Array(puzzleData.length).fill(''));
   const [activeClue, setActiveClue] = useState<number | null>(null);
-  const [revealedMessage, setRevealedMessage] = useState<string>('');
+  const [revealedMessage, setRevealedMessage] = useState<string[]>(
+    secretMessage.split('').map(char => isPunctuationOrSpace(char) ? char : '')
+  );
 
   // Update the revealed message whenever user answers change
   useEffect(() => {
-    let message = '';
+    // Create a copy of the initial state with punctuation preserved
+    const newRevealedMessage = secretMessage.split('').map(char => 
+      isPunctuationOrSpace(char) ? char : ''
+    );
     
-    puzzleData.forEach((puzzle, index) => {
-      const userAnswer = userAnswers[index].toUpperCase();
-      if (userAnswer && isAnswerCorrect(index)) {
-        puzzle.messageLetters.forEach(letterIndex => {
-          if (letterIndex < userAnswer.length) {
-            message += userAnswer[letterIndex];
-          }
+    // Track which puzzle corresponds to which letter in the secret message
+    let letterIndex = 0;
+    const letterToPuzzleMap = new Map<number, { puzzleId: number, letterIndex: number }>();
+    
+    // Map each non-punctuation character position to its puzzle
+    secretMessage.split('').forEach((char, index) => {
+      if (!isPunctuationOrSpace(char)) {
+        letterToPuzzleMap.set(index, {
+          puzzleId: puzzleData[letterIndex].id,
+          letterIndex: puzzleData[letterIndex].messageLetters[0]
         });
-      } else {
-        puzzle.messageLetters.forEach(() => {
-          message += '';
-        });
+        letterIndex++;
       }
     });
-
-    setRevealedMessage(message);
-    onMessageUpdate(message);
-  }, [userAnswers, onMessageUpdate]);
+    
+    // Fill in the revealed letters based on correct answers
+    puzzleData.forEach((puzzle, index) => {
+      const userAnswer = userAnswers[index]?.toUpperCase() || '';
+      
+      // Check if the answer is correct
+      if (userAnswer && userAnswer === puzzle.answer.toUpperCase()) {
+        // Find where this letter belongs in the secret message
+        for (const [msgIndex, mapping] of letterToPuzzleMap.entries()) {
+          if (mapping.puzzleId === puzzle.id) {
+            // Put the correct letter in the right position
+            const letterPos = mapping.letterIndex;
+            if (letterPos < userAnswer.length) {
+              newRevealedMessage[msgIndex] = userAnswer[letterPos];
+            }
+            break;
+          }
+        }
+      }
+    });
+    
+    setRevealedMessage(newRevealedMessage);
+    onMessageUpdate(newRevealedMessage.join(''));
+  }, [userAnswers, secretMessage, onMessageUpdate]);
 
   // Handle input change for a puzzle answer
   const handleAnswerChange = (index: number, value: string) => {
@@ -105,6 +136,13 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
   // Check if the answer is correct
   const isAnswerCorrect = (index: number) => {
     return userAnswers[index].toUpperCase() === puzzleData[index].answer.toUpperCase();
+  };
+  
+  // Reveal the answer for a specific puzzle
+  const revealAnswer = (index: number) => {
+    const newAnswers = [...userAnswers];
+    newAnswers[index] = puzzleData[index].answer;
+    setUserAnswers(newAnswers);
   };
 
   return (
@@ -130,7 +168,7 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
         {/* Answers Section */}
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="text-2xl font-bold mb-4 text-primary">Answers</h2>
-          <div className="space-y-4">
+          <div className="space-y-1">
             {puzzleData.map((puzzle, index) => (
               <div key={puzzle.id} className="flex items-center">
                 <span className="font-bold mr-2 w-8">{puzzle.id}.</span>
@@ -156,26 +194,49 @@ const PuzzleGrid: React.FC<PuzzleGridProps> = ({ onMessageUpdate }) => {
                     <span className="text-xs" title="Contributing to secret message">★</span>
                   </div>
                 )}
+                  <button
+                    className="ml-2 p-1 px-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm"
+                    onClick={() => revealAnswer(index)}
+                    title="Reveal answer"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </button>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Secret Message Preview */}
+      {/* Secret Message Preview - modified to show punctuation always */}
       <div className="mt-8 p-4 bg-gray-100 rounded-lg">
         <h3 className="text-lg font-semibold mb-2">Secret Message Progress:</h3>
         <div className="flex flex-wrap gap-2">
           {secretMessage.split('').map((char, index) => (
             <div 
               key={index}
-              className={`w-8 h-8 flex items-center justify-center border ${
-                revealedMessage[index] ? 'bg-green-100 border-green-500' : 'bg-white border-gray-300'
-              }`}
+              className={`w-8 h-8 flex items-center justify-center border 
+                ${isPunctuationOrSpace(char) ? 'bg-gray-100 border-gray-400' : 
+                  revealedMessage[index] ? 'bg-green-100 border-green-500' : 'bg-white border-gray-300'}`}
             >
-              {revealedMessage[index] || (char === ' ' ? ' ' : '')}
+              {isPunctuationOrSpace(char) ? char : revealedMessage[index]}
             </div>
           ))}
+        </div>
+        
+        {/* Reveal All Button */}
+        <div className="mt-4">
+          <button
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+            onClick={() => {
+              const newAnswers = puzzleData.map(puzzle => puzzle.answer);
+              setUserAnswers(newAnswers);
+            }}
+          >
+            Reveal All Answers
+          </button>
         </div>
       </div>
     </div>

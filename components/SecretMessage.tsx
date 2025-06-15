@@ -29,6 +29,7 @@ const SecretMessage: React.FC<SecretMessageProps> = ({ message }) => {
 
   // Calculate completion percentage
   const completionPercentage = Math.round((message.length / fullMessage.length) * 100);
+  
 
   return (
     <div className="mt-12 w-full max-w-4xl">
@@ -47,10 +48,11 @@ const SecretMessage: React.FC<SecretMessageProps> = ({ message }) => {
         <p className="text-sm text-gray-500 mb-4">
           {completionPercentage}% complete
         </p>
-        
-        <div className={`text-2xl font-bold ${isComplete ? 'text-primary' : 'text-gray-700'} text-center p-4 border-2 rounded-lg ${isComplete ? 'border-primary animate-pulse' : 'border-gray-200'}`}>
-          {message || "_ ".repeat(20)}
-        </div>
+        {isComplete && 
+          ( <div className={`text-2xl font-bold ${isComplete ? 'text-primary' : 'text-gray-700'} text-center p-4 border-2 rounded-lg ${isComplete ? 'border-primary animate-pulse' : 'border-gray-200'}`}>
+            { fullMessage }
+            </div>)
+        }
         
         {isComplete && (
           <div className="mt-6 text-center">
