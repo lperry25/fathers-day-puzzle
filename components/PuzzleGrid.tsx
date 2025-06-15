@@ -1,29 +1,28 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 // Define the puzzle clues and answers - removing punctuation from answers
 const puzzleData = [
   // LOVE
   { id: 1, clue: "Affection or deep attachment", answer: "LOVE", messageLetters: [0] }, // L
   { id: 2, clue: "Circular shape or ring", answer: "LOOP", messageLetters: [1] }, // O 
-  { id: 3, clue: "Captivated and unable to turn away", answer: "RIVETED", messageLetters: [2] }, // V
-  { id: 4, clue: "Symbol denoting conceptual possibilities", answer: "EMBLEM", messageLetters: [0] }, // E
+  { id: 3, clue: "Fixed in intense attention", answer: "RIVETED", messageLetters: [2] }, // V
+  { id: 4, clue: "Symbol of an idea or identity", answer: "EMBLEM", messageLetters: [0] }, // E
   
   // YOU
   { id: 5, clue: "Shout of excitement", answer: "YODEL", messageLetters: [0] }, // Y
-  { id: 6, clue: "Spherical celestial object", answer: "ORB", messageLetters: [0] }, // O - fixed from ORION
-  { id: 7, clue: "Anatomical passage for respiration", answer: "TUBULAR", messageLetters: [1] }, // U
+  { id: 6, clue: "Spherical celestial object", answer: "ORB", messageLetters: [0] }, // O 
+  { id: 7, clue: "Shaped like a windpipe", answer: "TUBULAR", messageLetters: [1] }, // U
   
   // DAD
-  { id: 8, clue: "Paternal guardian", answer: "DADDY", messageLetters: [0] }, // D
+  { id: 8, clue: "Paternal guardian", answer: "DAD", messageLetters: [0] }, // D
   { id: 9, clue: "First letter in Greek alphabet", answer: "ALPHA", messageLetters: [0] }, // A
-  { id: 10, clue: "Essential feature of exclamation", answer: "DRAMATIC", messageLetters: [0] }, // D
+  { id: 10, clue: "Full of theatrical flair", answer: "DRAMATIC", messageLetters: [0] }, // D
 
   // HAVE
-  { id: 11, clue: "Dwelling for nocturnal winged mammals", answer: "HABITAT", messageLetters: [0] }, // H 
+  { id: 11, clue: "Dwelling for animals", answer: "HABITAT", messageLetters: [0] }, // H 
   { id: 12, clue: "Certainty beyond reasonable doubt", answer: "ASSURED", messageLetters: [0] }, // A
-  { id: 13, clue: "Horizontal navigation instrument", answer: "SEXTANT", messageLetters: [2] }, // V
-  { id: 14, clue: "Ethereal apparitions in haunted locations", answer: "SPECTERS", messageLetters: [2] }, // E
+  { id: 13, clue: "Path across a space or structure", answer: "TRAVERSAL", messageLetters: [3] }, // V
+  { id: 14, clue: "Phantom seen in eerie places", answer: "SPECTERS", messageLetters: [2] }, // E
 
   // A
   { id: 15, clue: "Substantial in magnitude", answer: "GIGANTIC", messageLetters: [3] }, // A
@@ -32,35 +31,35 @@ const puzzleData = [
   { id: 16, clue: "Initial creative breakthrough", answer: "GENESIS", messageLetters: [0] }, // G
   { id: 17, clue: "Cardinal direction of sunrise", answer: "EASTERN", messageLetters: [5] }, // R 
   { id: 18, clue: "Terminal destination", answer: "ENDPOINT", messageLetters: [0] }, // E
-  { id: 19, clue: "Precipitation in frigid conditions", answer: "SLEET", messageLetters: [0] }, // A - wrong
-  { id: 20, clue: "Systematic organization of info", answer: "TAXONOMY", messageLetters: [1] }, // T 
+  { id: 19, clue: "Ancient Greek marketplace", answer: "AGORA", messageLetters: [0] }, // A
+  { id: 20, clue: "Systematic organization of info", answer: "TAXONOMY", messageLetters: [0] }, // T 
   
   // FATHER
-  { id: 21, clue: "Progenitor of family lineage", answer: "PATRIARCH", messageLetters: [3] }, // F - wrong
+  { id: 21, clue: "Fundamental principle", answer: "FACT", messageLetters: [0] }, // F
   { id: 22, clue: "Astronomical explosion visible from Earth", answer: "SUPERNOVA", messageLetters: [8] }, // A
   { id: 23, clue: "Temporal measurement device", answer: "TIMEPIECE", messageLetters: [0] }, // T 
   { id: 24, clue: "Aromatic foliage from herbaceous plant", answer: "HERBAL", messageLetters: [0] }, // H 
-  { id: 25, clue: "Melodic vocal expression", answer: "CHANTING", messageLetters: [4] }, // E - wrong
+  { id: 25, clue: "Educational institution", answer: "COLLEGE", messageLetters: [4] }, // E 
   { id: 26, clue: "Panoramic vista", answer: "SCENERY", messageLetters: [5] }, // R
   
   // 'S
-  { id: 27, clue: "Cerebral disorder characterizing confusion", answer: "STUPOR", messageLetters: [0] }, // S
+  { id: 27, clue: "Dazed mental state", answer: "STUPOR", messageLetters: [0] }, // S
   
   // DAY!
   { id: 28, clue: "Creation of visible boundary", answer: "DEMARCATION", messageLetters: [0] }, // D
-  { id: 29, clue: "Initial vocal response to surprise", answer: "ASTONISHMENT", messageLetters: [0] }, // A 
+  { id: 29, clue: "Overwhelming surprise", answer: "ASTONISHMENT", messageLetters: [0] }, // A 
   { id: 30, clue: "Juvenile development stage", answer: "YOUTH", messageLetters: [0] }, // Y 
   
   // LOVE
-  { id: 31, clue: "Profound romantic attachment", answer: "ADORATION", messageLetters: [3] }, // L - wrong
+  { id: 31, clue: "Lion constellation in zodiac", answer: "LEO", messageLetters: [0] }, // L
   { id: 32, clue: "Vacant space above surface", answer: "OVERHEAD", messageLetters: [0] }, // O 
   { id: 33, clue: "Triumphant gladiatorial gesture", answer: "VICTORY", messageLetters: [0] }, // V 
   { id: 34, clue: "Essential element for respiration", answer: "OXYGEN", messageLetters: [4] }, // E 
   
   // LAURA
   { id: 35, clue: "Directional illuminating device", answer: "FLASHLIGHT", messageLetters: [1] }, // L
-  { id: 36, clue: "Atmosphere surrounding celestial body", answer: "AURA", messageLetters: [0] }, // A
-  { id: 37, clue: "Naval fleet's defensive formation", answer: "ARMADA", messageLetters: [1] }, // U - wrong
+  { id: 36, clue: "Spiritual or emotional radiance", answer: "AURA", messageLetters: [0] }, // A
+  { id: 37, clue: "Underground passage", answer: "TUNNEL", messageLetters: [1] }, // U
   { id: 38, clue: "Circular theatrical platform", answer: "ARENA", messageLetters: [1] }, // R
   { id: 39, clue: "Primary visual representation", answer: "APPEARANCE", messageLetters: [0] }, // A
   
